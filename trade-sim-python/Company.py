@@ -1,6 +1,8 @@
 from random import randint
 from Enums import Status
-
+from matplotlib import pyplot as plt
+import numpy as np
+plt.style.use('seaborn-whitegrid')
 
 class Company:
     def __init__(self, name="unnamed company", starting_worth=1000, progress_function=0):
@@ -25,8 +27,20 @@ class Company:
         if self._worth <= 0:
             self.status = Status.BANKRUPT
 
+    def get_worth(self):
+        return self._worth
+
+    def plot_history(self):
+        fig = plt.figure()
+        ax = plt.axes()
+        plt.title(self.name)
+        x = np.array(range(0, len(self.worth_history)))
+        ax.plot(x, np.array(self.worth_history))
+        plt.show()
+
+
 
 def default_progress_function(upkeeps_passed):
     modifier = 100 if upkeeps_passed < 300 else -100
-    random_factor = randint(-10, 10)
+    random_factor = randint(-7000, 7000)
     return modifier + random_factor

@@ -1,4 +1,7 @@
 from Enums import Status
+from matplotlib import pyplot as plt
+import numpy as np
+plt.style.use('seaborn-whitegrid')
 
 
 class Agent:
@@ -15,6 +18,9 @@ class Agent:
 
     def __repr__(self):
         return "@" + str(self.name) + " B:" + str(self._bits) + " U:" + str(self.upkeep) + " " + str(self.status)
+
+    def get_bits(self):
+        return self._bits
 
     def modify_bits(self, modifier):
         if self.status == Status.BANKRUPT:
@@ -36,4 +42,12 @@ class Agent:
 
     def play_round(self, market, companies):
         pass
+
+    def plot_history(self):
+        fig = plt.figure()
+        ax = plt.axes()
+        plt.title(self.name)
+        x = np.array(range(0, len(self.net_worth_history)))
+        ax.plot(x, np.array(self.net_worth_history))
+        plt.show()
 
