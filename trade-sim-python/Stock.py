@@ -3,6 +3,6 @@ class Stock:
         self.company = company
 
     def calculate_value(self):
-        return self.company.worth/1000.0
+        return self.company._worth/1000.0
 
 

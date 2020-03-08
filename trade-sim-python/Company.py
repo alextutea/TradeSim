@@ -39,7 +39,6 @@ class Company:
         plt.show()
 
 
-
 def default_progress_function(upkeeps_passed):
     modifier = 100 if upkeeps_passed < 300 else -100
     random_factor = randint(-7000, 7000)

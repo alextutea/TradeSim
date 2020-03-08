@@ -1,6 +1,7 @@
 from Enums import Status
 from matplotlib import pyplot as plt
 import numpy as np
+from random import randint
 plt.style.use('seaborn-whitegrid')
 
 
@@ -17,7 +18,7 @@ class Agent:
         self.net_worth_history = [starting_bits]
 
     def __repr__(self):
-        return "@" + str(self.name) + " B:" + str(self._bits) + " U:" + str(self.upkeep) + " " + str(self.status)
+        return "@" + str(self.name) + " B:" + str(self._bits) + " U:" + str(self.upkeep) + " " + "Sc: " + str(len(self.stocks)) + " " + str(self.status)
 
     def get_bits(self):
         return self._bits
@@ -40,8 +41,23 @@ class Agent:
             return
         self.modify_bits(-self.upkeep)
 
+    def buy_stock(self, market_offer):
+        if self.status == Status.BANKRUPT:
+            return
+        self.modify_bits(-market_offer.get_price())
+        if self.status == Status.BANKRUPT:
+            return
+        self.stocks.append(market_offer.stock)
+
     def play_round(self, market, companies):
-        pass
+        if self.status == Status.BANKRUPT:
+            return
+        if len(market.current_offers) > 0:
+            rand = randint(0, 1000)
+            if rand % 999 == 0:
+                rand = randint(0, len(market.current_offers)-1)
+                self.buy_stock(market.current_offers[rand])
+                market.accept_offer(market.current_offers[rand], self)
 
     def plot_history(self):
         fig = plt.figure()
