@@ -30,14 +30,16 @@ class Company:
     def get_worth(self):
         return self._worth
 
-    def plot_history(self):
+    def plot_history(self, save_folder_path, save_file_name):
         fig = plt.figure()
         ax = plt.axes()
         plt.title(self.name)
         x = np.array(range(0, len(self.worth_history)))
         ax.plot(x, np.array(self.worth_history))
-        plt.show()
-
+        if save_folder_path is None:
+            plt.show()
+        else:
+            plt.savefig(str(save_folder_path) + "/" + str(save_file_name) + "_company_" + str(self.name) + ".png")
 
 def default_progress_function(upkeeps_passed):
     modifier = 100 if upkeeps_passed < 300 else -100

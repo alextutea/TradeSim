@@ -59,11 +59,13 @@ class Agent:
                 self.buy_stock(market.current_offers[rand])
                 market.accept_offer(market.current_offers[rand], self)
 
-    def plot_history(self):
+    def plot_history(self, save_folder_path, save_file_name):
         fig = plt.figure()
         ax = plt.axes()
         plt.title(self.name)
         x = np.array(range(0, len(self.net_worth_history)))
         ax.plot(x, np.array(self.net_worth_history))
-        plt.show()
-
+        if save_folder_path is None:
+            plt.show()
+        else:
+            plt.savefig(str(save_folder_path) + "/" + str(save_file_name) + "_agent_" + str(self.name) + ".png")

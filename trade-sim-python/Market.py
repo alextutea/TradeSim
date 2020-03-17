@@ -37,7 +37,7 @@ class Market:
     def tick(self):
         self.tick_count += 1
 
-    def plot_history(self):
+    def plot_history(self, save_folder_path, save_file_name):
         fig = plt.figure()
         x = np.array(range(0, self.tick_count))
         ax = plt.axes()
@@ -51,8 +51,10 @@ class Market:
             scatter = ax.scatter(sell_times, prices, s=3, label=str(company.name))
         plt.xlim(0, self.tick_count)
         plt.legend()
-        plt.show()
-
+        if save_folder_path is None:
+            plt.show()
+        else:
+            plt.savefig(str(save_folder_path) + "/" + str(save_file_name) + "_market_sales.png")
 
 class Offer:
     def __init__(self, stock, price, seller):
